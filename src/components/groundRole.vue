@@ -24,7 +24,7 @@ onMounted(() => {
 <style lang="scss" scoped>
 .BackRole {
     position: fixed;
-    height: 60vh;
+    height: 60vmax;
     object-fit: cover;
     opacity: 0;
     transition: all 2s;

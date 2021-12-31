@@ -1,27 +1,38 @@
 <template>
-    <button class="default_menuBtn" @touchstart.passive="playAudio" @click="Tap">
+    <button
+        :class="{ default_menuBtn_hide: !btnShow }"
+        class="default_menuBtn"
+        @touchstart.passive="playAudio"
+        @click="Tap"
+    >
         <slot></slot>
     </button>
+    <audio ref="audio" :src="clickAudio" style="display: none;"></audio>
 </template>
 
 <script lang="ts" setup>
 import clickAudio from "@/assets/audio/item_click.wav"
+import { ref } from "vue"
 const emit = defineEmits(["tap"])
-const prop = defineProps<{
-    index: string
+const btnShow = ref<boolean>(true)
+defineProps<{
+    time: string
 }>()
+const audio = ref<HTMLAudioElement>()
 async function playAudio() {
-    const audioContext = new AudioContext()
-    const res = await fetch(clickAudio);
-    const arraybuffer = await res.arrayBuffer();
-    const audioBuffer = await audioContext.decodeAudioData(arraybuffer);
-    const source = audioContext.createBufferSource();
-    source.connect(audioContext.destination); //连接上实例
-    source.buffer = audioBuffer;
-    source.start()
+    audio.value?.play()
 }
 async function Tap(e: Event) {
     emit("tap", e)
+}
+function hideBtn() {
+    btnShow.value = false
+}
+defineExpose({
+    hideBtn
+})
+export interface API {
+    hideBtn: () => void
 }
 </script>
 <style lang="scss" scoped>
@@ -43,7 +54,16 @@ async function Tap(e: Event) {
     user-select: none;
     opacity: 0;
     transform: translateY(-120%);
-    animation: default_menuBtn_show 1.6s v-bind(index) forwards;
+    animation: default_menuBtn_show 0.9s v-bind(time) forwards;
+}
+.default_menuBtn_hide {
+    opacity: 1;
+    transform: translateY(0%);
+    animation: default_menuBtn_hide 0.9s v-bind(time) forwards !important;
+}
+.default_menuBtn:active {
+    background: url("@/assets/img/defalutBtn_active.svg") no-repeat;
+    background-size: 100% 100%;
 }
 @keyframes default_menuBtn_show {
     from {
@@ -53,6 +73,16 @@ async function Tap(e: Event) {
     to {
         opacity: 1;
         transform: translateY(0%);
+    }
+}
+@keyframes default_menuBtn_hide {
+    from {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+    to {
+        opacity: 0;
+        transform: translateY(-120%);
     }
 }
 </style>
