@@ -3,6 +3,7 @@ import Home from "@/pages/home/home.vue"
 import setting from "@/pages/setting/setting.vue"
 import history from "@/pages/history/history.vue"
 import songList from "@/pages/songList/songList.vue"
+import scene from "@/pages/Game/Scene.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -18,6 +19,9 @@ const router = createRouter({
     }, {
       path: "/song",
       component: songList
+    }, {
+      path: "/Game",
+      component: scene
     }
   ]
 })

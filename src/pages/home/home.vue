@@ -35,7 +35,7 @@ const BtnList = reactive<Array<HomeBtnInterfaceList>>([{
         }
     },
     time: "0s",
-    text: "选择铺面",
+    text: "选择谱面",
     tap() {
         setTimeout(() => {
             emit("to", "/song")

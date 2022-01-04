@@ -1,13 +1,16 @@
 
 <template>
-    <li class="song" >
+    <li class="song" @click="tapSong">
         <div class="song_Top"></div>
         <div class="song_Bottom"></div>
     </li>
 </template>
 
 <script lang="ts" setup>
-import { reactive, toRefs, onBeforeMount, onMounted } from 'vue'
+const emit = defineEmits(["tap"])
+function tapSong(e: Event) {
+    emit("tap", e)
+}
 </script>
 <style lang="scss" scoped>
 .song {

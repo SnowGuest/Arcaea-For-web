@@ -23,6 +23,7 @@ html,
 body,
 #app {
   width: 100%;
+  overscroll-behavior-y: contain;
   height: 100%;
 }
 #app {

@@ -1,9 +1,34 @@
 <script setup lang="ts">
-import groundRole from './components/groundRole.vue';
 import { useRouter } from "vue-router"
-import { onMounted, ref } from 'vue';
+import { provide, reactive, ref } from 'vue';
+import groundRole from './components/groundRole.vue';
 import groundmusic from './components/groundmusic.vue';
+import Loading, { LoadingAPI } from './components/Loading.vue';
 const router = useRouter()
+const LoadingRef = ref<LoadingAPI>()
+export interface API {
+  showLoading: () => Promise<boolean>
+  hideLoading: () => Promise<boolean>
+}
+const base = reactive<API>({
+  async showLoading() {
+    if (LoadingRef.value) {
+      await LoadingRef.value.show()
+      return Promise.resolve(true)
+    } else {
+      return Promise.reject(false)
+    }
+  },
+  async hideLoading() {
+    if (LoadingRef.value) {
+      await LoadingRef.value.hide()
+      return Promise.resolve(true)
+    } else {
+      return Promise.reject(false)
+    }
+  }
+})
+provide<API>("base", base)
 
 function pushRouter(e: string, params: any = {}) {
   router.push({
@@ -17,10 +42,8 @@ function pushRouter(e: string, params: any = {}) {
 <template>
   <groundRole />
   <groundmusic />
-
-  <!-- <div> -->
+  <Loading ref="LoadingRef" />
   <router-view @to="pushRouter"></router-view>
-  <!-- </div> -->
 </template>
 
 <style>
@@ -28,5 +51,6 @@ function pushRouter(e: string, params: any = {}) {
 #app {
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
 </style>
