@@ -14,9 +14,10 @@
 
 <script lang="ts" setup>
 import defalutBtn, { API as BtnAPI } from '@/components/defalutBtn.vue';
-import { reactive, Ref } from 'vue';
-
-const emit = defineEmits(["to"]);
+import { reactive, Ref, inject } from 'vue';
+import { API } from "@/App.vue"
+const base = inject<API>("base")
+// const emits = defineEmits(["to"]);
 
 interface HomeBtnInterfaceList {
     key: number,
@@ -38,7 +39,8 @@ const BtnList = reactive<Array<HomeBtnInterfaceList>>([{
     text: "选择谱面",
     tap() {
         setTimeout(() => {
-            emit("to", "/song")
+            base?.pushRouter("/song")
+            // emits("to", "/song")
         }, 1500);
     }
 }, {
@@ -66,7 +68,9 @@ const BtnList = reactive<Array<HomeBtnInterfaceList>>([{
     text: "游玩记录",
     tap() {
         setTimeout(() => {
-            emit("to", "/history")
+            // emits("to", "/history")
+            base?.pushRouter("/history")
+
         }, 1500);
     }
 }])

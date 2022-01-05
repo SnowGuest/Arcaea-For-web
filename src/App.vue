@@ -2,15 +2,21 @@
 import { useRouter } from "vue-router"
 import { provide, reactive, ref } from 'vue';
 import groundRole from './components/groundRole.vue';
-import groundmusic from './components/groundmusic.vue';
+import groundMusic, { groundMusicAPI } from './components/groundMusic.vue';
 import Loading, { LoadingAPI } from './components/Loading.vue';
 const router = useRouter()
 const LoadingRef = ref<LoadingAPI>()
+const groundMusicRef = ref<groundMusicAPI>()
 export interface API {
+  playGame: () => void
   showLoading: () => Promise<boolean>
   hideLoading: () => Promise<boolean>
+  pushRouter: (e: string, params?: any) => void
 }
 const base = reactive<API>({
+  playGame() {
+    groundMusicRef.value?.stopMusic()
+  },
   async showLoading() {
     if (LoadingRef.value) {
       await LoadingRef.value.show()
@@ -26,24 +32,25 @@ const base = reactive<API>({
     } else {
       return Promise.reject(false)
     }
+  },
+  pushRouter(e: string, params: any = {}) {
+    router.push({
+      path: e,
+      params
+    })
   }
 })
 provide<API>("base", base)
 
-function pushRouter(e: string, params: any = {}) {
-  router.push({
-    path: e,
-    params
-  })
-}
+
 
 </script>
 
 <template>
   <groundRole />
-  <groundmusic />
+  <groundMusic ref="groundMusicRef" />
   <Loading ref="LoadingRef" />
-  <router-view @to="pushRouter"></router-view>
+  <router-view></router-view>
 </template>
 
 <style>

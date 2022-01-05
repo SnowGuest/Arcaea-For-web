@@ -19,7 +19,7 @@ import { API } from "@/App.vue"
 const base = inject<API>("base")
 const popupShow = ref<boolean>(false)
 const songList = ref<HTMLUListElement>()
-const emit = defineEmits(["to"]);
+// const emit = defineEmits(["to"]);
 
 function moveing(e: Event) {
     console.log(e)
@@ -34,9 +34,14 @@ async function playSong(e: number) {
     async function watchScreen() {
         if (!isOrientation()) {
             await base?.showLoading()
-            emit("to", "/Game")
             popupShow.value = false
             window.removeEventListener("orientationchange", watchScreen)
+
+            setTimeout(() => {
+                base?.pushRouter("/Game")
+                // emit()
+            }, 100);
+
         }
     }
     if (isOrientation()) {
@@ -44,7 +49,8 @@ async function playSong(e: number) {
         window.addEventListener("orientationchange", watchScreen)
     } else {
         await base?.showLoading()
-        emit("to", "/Game")
+        base?.pushRouter("/Game")
+
     }
 }
 </script>

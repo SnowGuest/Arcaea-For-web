@@ -2,10 +2,11 @@
 <template>
     <div class="backMusic center" @click="playGoundMusic">
         <span
-            :class="{ backMusicIconWhirl: !GoundMusicFlag }"
-            ref="backMusicIcon"
+            :class="{ backMusicIconWhirl: GoundMusicFlag }"
             class="iconfont icon-yinle"
         ></span>
+            <!-- ref="backMusicIcon" -->
+
         <audio
             volume="0.3"
             preload="auto"
@@ -15,7 +16,7 @@
             autoplay
             loop
         ></audio>
-        <div :class="{ pauseAudio: GoundMusicFlag }"></div>
+        <div :class="{ pauseAudio: !GoundMusicFlag }"></div>
     </div>
 </template>
 
@@ -23,7 +24,7 @@
 import { ref, onMounted } from 'vue'
 import arc from "@/assets/audio/story_loop.ogg"
 const goundMusic = ref<HTMLAudioElement>()
-const backMusicIcon = ref<HTMLSpanElement>()
+// const backMusicIcon = ref<HTMLSpanElement>()
 const GoundMusicFlag = ref<boolean>(false)
 function playGoundMusic() {
     if (goundMusic.value) {
@@ -32,8 +33,15 @@ function playGoundMusic() {
         GoundMusicFlag.value = goundMusic.value.paused
     }
 }
-onMounted(playGoundMusic)
-
+playGoundMusic()
+export interface groundMusicAPI {
+    stopMusic: () => void
+}
+defineExpose({
+    stopMusic() {
+        goundMusic.value?.pause()
+    }
+})
 </script>
 <style lang="scss" scoped>
 .pauseAudio {
