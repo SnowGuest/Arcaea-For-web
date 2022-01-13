@@ -8,4 +8,4 @@ You can check the current approximate progress by visiting the following website
 [SngBlog.cn] (https://sngblog.cn)
 
 # technology stack
-Vite + Vue3 + BabyIon.js
+Vite + Vue3 + BabyIon.js + TypeScript
