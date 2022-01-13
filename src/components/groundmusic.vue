@@ -1,11 +1,8 @@
 <!--  -->
 <template>
     <div class="backMusic center" @click="playGoundMusic">
-        <span
-            :class="{ backMusicIconWhirl: GoundMusicFlag }"
-            class="iconfont icon-yinle"
-        ></span>
-            <!-- ref="backMusicIcon" -->
+        <span :class="{ backMusicIconWhirl: GoundMusicFlag }" class="iconfont icon-yinle"></span>
+        <!-- ref="backMusicIcon" -->
 
         <audio
             volume="0.3"
@@ -30,7 +27,7 @@ function playGoundMusic() {
     if (goundMusic.value) {
         const fnName = goundMusic.value.paused ? "play" : "pause"
         goundMusic.value[fnName]()
-        GoundMusicFlag.value = goundMusic.value.paused
+        GoundMusicFlag.value = !GoundMusicFlag.value
     }
 }
 playGoundMusic()

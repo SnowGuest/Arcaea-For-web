@@ -1,6 +1,7 @@
 {
-  "name": "portablearc",
-  "version": "0.0.0",
+  "name": "arcaea-for-web",
+  "version": "0.0.1",
+  
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",

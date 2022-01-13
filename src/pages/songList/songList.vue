@@ -39,7 +39,7 @@ async function playSong(e: number) {
 
             setTimeout(() => {
                 base?.pushRouter("/Game")
-                // emit()
+                base?.playGame()
             }, 100);
 
         }
@@ -50,7 +50,7 @@ async function playSong(e: number) {
     } else {
         await base?.showLoading()
         base?.pushRouter("/Game")
-
+        base?.playGame()
     }
 }
 </script>
