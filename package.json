@@ -2,7 +2,12 @@
   "name": "arcaea-for-web",
   "version": "0.0.1",
   "license": "MIT",
-  
+  "author": "SngBlog",
+  "description": "A web simulator that simulates the Arcaea chart.",
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/SngBlog/Arcaea-For-web"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
