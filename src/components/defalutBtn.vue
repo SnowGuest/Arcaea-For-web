@@ -2,9 +2,10 @@
     <button
         :class="{ default_menuBtn_hide: !btnShow }"
         class="default_menuBtn"
-        @touchstart.passive="playAudio"
         @click="Tap"
     >
+        <!-- @touchstart.passive="playAudio" -->
+
         <slot></slot>
     </button>
     <audio ref="audio" :src="clickAudio" style="display: none;"></audio>
@@ -13,16 +14,20 @@
 <script lang="ts" setup>
 import clickAudio from "@/assets/audio/item_click.wav"
 import { ref } from "vue"
-const emit = defineEmits(["tap"])
-const btnShow = ref<boolean>(true)
+export interface API {
+    hideBtn: () => void
+}
 defineProps<{
     time: string
 }>()
+const emit = defineEmits(["tap"])
+const btnShow = ref<boolean>(true)
+
 const audio = ref<HTMLAudioElement>()
 async function playAudio() {
-    audio.value?.play()
 }
 async function Tap(e: Event) {
+    audio.value?.play()
     emit("tap", e)
 }
 function hideBtn() {
@@ -31,9 +36,7 @@ function hideBtn() {
 defineExpose({
     hideBtn
 })
-export interface API {
-    hideBtn: () => void
-}
+
 </script>
 <style lang="scss" scoped>
 .default_menuBtn {
@@ -55,6 +58,7 @@ export interface API {
     opacity: 0;
     transform: translateY(-120%);
     animation: default_menuBtn_show 0.9s v-bind(time) forwards;
+    touch-action: none;
 }
 .default_menuBtn_hide {
     opacity: 1;

@@ -30,7 +30,7 @@ function backPage() {
     .historyHeader {
         column-gap: 14px;
         span {
-            font-weight: 700;
+            font-weight: 700 !important;
             position: relative;
             &::after {
                 position: absolute;

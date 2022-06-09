@@ -68,9 +68,7 @@ const BtnList = reactive<Array<HomeBtnInterfaceList>>([{
     text: "游玩记录",
     tap() {
         setTimeout(() => {
-            // emits("to", "/history")
             base?.pushRouter("/history")
-
         }, 1500);
     }
 }])

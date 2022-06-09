@@ -7,11 +7,11 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-const Loading = ref<boolean>()
 export interface LoadingAPI {
     show: () => Promise<boolean>
     hide: () => Promise<boolean>
 }
+const Loading = ref<boolean>()
 const Expose: LoadingAPI = {
     show() {
         return new Promise((resolve, reject) => {

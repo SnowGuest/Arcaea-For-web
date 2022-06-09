@@ -15,11 +15,11 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "babylonjs": "^5.9.1",
     "pinia": "^2.0.9",
-    "three": "^0.136.0",
+    "sass": "^1.45.1",
     "vue": "^3.2.26",
-    "vue-router": "^4.0.12",
-    "sass": "^1.45.1"
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@types/node": "^16.11.17",
