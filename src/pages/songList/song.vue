@@ -11,6 +11,7 @@ const emit = defineEmits(["tap"])
 function tapSong(e: Event) {
     emit("tap", e)
 }
+
 </script>
 <style lang="scss" scoped>
 .song {

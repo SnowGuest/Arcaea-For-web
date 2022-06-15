@@ -7,14 +7,32 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, inject } from "vue";
+import { ref, inject, onMounted } from "vue";
 import item from "./song.vue"
 import { API } from "@/App.vue"
 
 const base = inject<API>("base")
 const songList = ref<HTMLUListElement>()
+let ulHeight = 0
+onMounted(() => {
+    if (songList.value) {
+        ulHeight = songList.value.getBoundingClientRect().height
+    }
+})
 function moveing(e: Event) {
-    console.log(e)
+
+    // <HTMLLIElement>
+    const child = (e.target as HTMLUListElement).children
+    console.log((child[11] as HTMLLIElement).getBoundingClientRect().top)
+    for (let i = 0; i < child.length; i++) {
+        const element = child[i] as HTMLLIElement;
+        if (element.getBoundingClientRect().top < ulHeight * 0.8) {
+            const sum = element.getBoundingClientRect().top < element.getBoundingClientRect().height
+            element.style.transform = `translateX(${sum}px)`
+        }
+
+    }
+
 }
 /**
  * @return {boolean}  判断横屏还是竖屏 true竖屏
@@ -56,6 +74,4 @@ async function playSong(e: number) {
         opacity: 1;
     }
 }
-
-
 </style>
