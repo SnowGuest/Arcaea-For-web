@@ -7,7 +7,7 @@
 //     Vector2,
 // } from "three"
 
-import { ArcRotateCamera, BackgroundMaterial, Color3, Engine, HemisphericLight, Layer, Material, Mesh, MeshBuilder, Scene, StandardMaterial, Texture, Vector3 } from "babylonjs"
+import { ArcRotateCamera, BackgroundMaterial, Color3, Engine, HemisphericLight, Layer, Material, Mesh, MeshBuilder, PointerEventTypes, Scene, StandardMaterial, Texture, Vector3 } from "babylonjs"
 import backgroundImgUrl from "@/assets/gameMaterial/background/1.jpg"
 // import { OrbitControls } from "three/examples/jsm/controls/OrbitControls"
 // interface tracksInteface {
@@ -190,28 +190,45 @@ export default class CreateGameScene {
         this.createTrackBox()
     }
     createTrackBox() {
-        this.trackBox = MeshBuilder.CreateGround("plane", {
+        this.trackBox = MeshBuilder.CreatePlane("plane", {
             width: 4,
-            height: 40,
+            height: 50,
         }, this.scene);
         // this.trackBox.rotate()
         this.trackBox.translate(new Vector3(0, 0, 1), 10)
-        this.trackBox.rotate(new Vector3(1, 0, 0), -0.09)
+        this.trackBox.rotate(new Vector3(1, 0, 0), 1.5)
 
-        const mat = new StandardMaterial("");
-        mat.diffuseColor = new Color3(224, 224, 224);
+        const mat = new StandardMaterial("", this.scene);
+        mat.diffuseColor = new Color3(0, 1, 0);
         this.trackBox.material = mat;
-        // const trackArr: Mesh[] = []
-        // for (let i = 0; i < 4; i++) {
-        //     trackArr.push(this.createTrack(i))
-        // }
 
+
+        for (let i = 0; i < 4; i++) {
+            this.trackBox.addChild(this.createTrack(i))
+        }
+        this.scene.onPointerObservable.add((e) => {
+            if (e.type === PointerEventTypes.POINTERDOWN) {
+                console.log(e, '点击了')
+            }
+        })
     }
-    createTrack(i: number) {
+    createTrack(i: number): Mesh {
         const track = MeshBuilder.CreatePlane("plane", {
-            width: 0.5,
-            height: 13,
+            width: 0.7,
+            height: 40
         });
+        // const mat = new StandardMaterial("");
+        // mat.diffuseColor = new Color3(224, 224, 224);
+        // track.material = mat
+        // console.log(-1.75 * (i + 1))
+        // const mat = new StandardMaterial("name" + i, this.scene);
+        // mat.diffuseColor = new Color3(i * 2, i * 3, i * 4);
+        // track.material = mat;
+        track.position.y = 0.01
+        track.translate(new Vector3(1, 0, 0), -1.28 + (i * 0.))
+        track.rotate(new Vector3(1, 0, 0), 1.5)
+
+
         return track
     }
 }

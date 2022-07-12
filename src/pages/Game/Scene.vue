@@ -53,7 +53,7 @@ async function preload() {
             if (lock) lock();
         }
         await LookContext
-        await sceneRenderer.value.requestFullscreen()
+        // await sceneRenderer.value.requestFullscreen()
     }
 }
 
